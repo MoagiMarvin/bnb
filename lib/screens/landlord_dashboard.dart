@@ -3,7 +3,7 @@ import 'package:bnb/screens/landlord_profile_screen.dart';
 import 'package:bnb/screens/settings_screen.dart';
 
 class LandlordDashboard extends StatefulWidget {
-  const LandlordDashboard({Key? key}) : super(key: key);
+  const LandlordDashboard({super.key});
 
   @override
   State<LandlordDashboard> createState() => _LandlordDashboardState();
@@ -77,7 +77,7 @@ class _LandlordDashboardState extends State<LandlordDashboard> {
 
 // Placeholder screens - replace with your actual screens
 class PropertiesScreen extends StatelessWidget {
-  const PropertiesScreen({Key? key}) : super(key: key);
+  const PropertiesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@ class PropertiesScreen extends StatelessWidget {
 }
 
 class BookingsScreen extends StatelessWidget {
-  const BookingsScreen({Key? key}) : super(key: key);
+  const BookingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

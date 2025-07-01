@@ -15,6 +15,57 @@ class _ShortStayScreenState extends State<ShortStayScreen> {
   // Options for dropdown
   final List<String> _options = ['Long Stay', 'Short Stay', 'Restaurants'];
   String _selectedOption = 'Short Stay'; // Default for this screen
+  final List<String> _categories = ["Resort", "Hotel", "Motel", "Cottage", "Villa"];
+  String _selectedCategory = "Resort";
+  
+  // Mock short stay property data
+  final List<Map<String, dynamic>> _properties = [
+    {
+      'title': 'Beachfront Resort',
+      'rating': 4.9,
+      'location': 'Coastal Area',
+      'availability': 'Available for booking',
+      'price': '\$150/night',
+      'imageUrl': 'https://images.unsplash.com/photo-1566073771259-6a8506099945',
+      'category': 'Resort',
+    },
+    {
+      'title': 'Mountain View Villa',
+      'rating': 4.7,
+      'location': 'Highland Resort',
+      'availability': 'Available next weekend',
+      'price': '\$200/night',
+      'imageUrl': 'https://images.unsplash.com/photo-1613490493576-7fde63acd811',
+      'category': 'Villa',
+    },
+    {
+      'title': 'Luxury Hotel Suite',
+      'rating': 4.6,
+      'location': 'City Center',
+      'availability': 'Available this week',
+      'price': '\$180/night',
+      'imageUrl': 'https://images.unsplash.com/photo-1578683010236-d716f9a3f461',
+      'category': 'Hotel',
+    },
+    {
+      'title': 'Budget Motel Room',
+      'rating': 4.0,
+      'location': 'Suburban',
+      'availability': 'Available now',
+      'price': '\$70/night',
+      'imageUrl': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+      'category': 'Motel',
+    },
+    {
+      'title': 'Cozy Cottage',
+      'rating': 4.3,
+      'location': 'Countryside',
+      'availability': 'Available from next month',
+      'price': '\$120/night',
+      'imageUrl': 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd',
+      'category': 'Cottage',
+    },
+  ];
   
   @override
   Widget build(BuildContext context) {
@@ -106,13 +157,17 @@ class _ShortStayScreenState extends State<ShortStayScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    CategoryButton(label: "Resort"),
-                    CategoryButton(label: "Hotel"),
-                    CategoryButton(label: "Motel"),
-                    CategoryButton(label: "Cottage"),
-                    CategoryButton(label: "Villa"),
-                  ],
+                  children: _categories.map((category) {
+                    return CategoryButton(
+                      label: category,
+                      selected: _selectedCategory == category,
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = category;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
               
@@ -121,34 +176,17 @@ class _ShortStayScreenState extends State<ShortStayScreen> {
               // Accommodation listings
               Expanded(
                 child: ListView(
-                  children: const [
-                    AccommodationCard(
-                      title: "Beachfront Resort",
-                      rating: 4.9,
-                      location: "Coastal Area",
-                      availability: "Available for booking",
-                      price: "\$150/night",
-                      imageUrl: "https://images.unsplash.com/photo-1566073771259-6a8506099945",
-                    ),
-                    SizedBox(height: 15),
-                    AccommodationCard(
-                      title: "Mountain View Villa",
-                      rating: 4.7,
-                      location: "Highland Resort",
-                      availability: "Available next weekend",
-                      price: "\$200/night",
-                      imageUrl: "https://images.unsplash.com/photo-1613490493576-7fde63acd811",
-                    ),
-                    SizedBox(height: 15),
-                    AccommodationCard(
-                      title: "Luxury Hotel Suite",
-                      rating: 4.6,
-                      location: "City Center",
-                      availability: "Available this week",
-                      price: "\$180/night",
-                      imageUrl: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461",
-                    ),
-                  ],
+                  children: _properties
+                      .where((property) => property['category'] == _selectedCategory)
+                      .map((property) => AccommodationCard(
+                            title: property['title'],
+                            rating: property['rating'],
+                            location: property['location'],
+                            availability: property['availability'],
+                            price: property['price'],
+                            imageUrl: property['imageUrl'],
+                          ))
+                      .toList(),
                 ),
               ),
             ],

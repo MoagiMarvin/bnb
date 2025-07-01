@@ -66,12 +66,11 @@ class Amenities {
   ];
 
   // Accessibility amenities
-  static const List<Map<String, dynamic>> accessibilityAmenities = [
-    {'id': 'step_free_access', 'name': 'Step-free Access', 'icon': Icons.accessible},
-    {'id': 'wide_doorway', 'name': 'Wide Doorway', 'icon': Icons.door_sliding},
-    {'id': 'wide_hallway', 'name': 'Wide Hallway', 'icon': Icons.door_front},
-    {'id': 'accessible_bathroom', 'name': 'Accessible Bathroom', 'icon': Icons.accessible_forward},
-    {'id': 'elevator', 'name': 'Elevator', 'icon': Icons.elevator},
+  static List<Map<String, dynamic>> accessibilityAmenities = <Map<String, dynamic>>[
+    const {'id': 'step_free_access', 'name': 'Step-free Access', 'icon': Icons.accessible},
+    const {'id': 'wide_doorway', 'name': 'Wide Doorway', 'icon': Icons.door_sliding},
+    const {'id': 'accessible_bathroom', 'name': 'Accessible Bathroom', 'icon': Icons.accessible_forward},
+    const {'id': 'elevator', 'name': 'Elevator', 'icon': Icons.elevator},
   ];
 
   // Services

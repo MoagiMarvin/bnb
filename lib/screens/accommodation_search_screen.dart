@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'long_stay_screen.dart';
 import 'short_stay_screen.dart';
 import 'restaurant_list_screen.dart';
 import '../widgets/category_button.dart';
@@ -16,6 +15,59 @@ class _AccommodationSearchScreenState extends State<AccommodationSearchScreen> {
   // Options for dropdown
   final List<String> _options = ['Long Stay', 'Short Stay', 'Restaurants'];
   String _selectedOption = 'Long Stay'; // Default selection
+  
+  // Categories for accommodation
+  final List<String> _categories = ["Single", "Sharing", "House", "Apartment"];
+  String _selectedCategory = "Single"; // Default selected
+  
+  // Mock property data
+  final List<Map<String, dynamic>> _properties = [
+    {
+      'title': 'Modern Studio Apartment',
+      'rating': 4.5,
+      'location': 'Downtown',
+      'availability': 'Available Immediately',
+      'price': '\$1200/month',
+      'imageUrl': 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267',
+      'category': 'Apartment',
+    },
+    {
+      'title': 'Luxury Apartment with View',
+      'rating': 4.8,
+      'location': 'City Center',
+      'availability': 'Available from June 1',
+      'price': '\$1800/month',
+      'imageUrl': 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2',
+      'category': 'Apartment',
+    },
+    {
+      'title': 'Cozy 2-Bedroom House',
+      'rating': 4.3,
+      'location': 'Suburban Area',
+      'availability': 'Available from July 15',
+      'price': '\$1500/month',
+      'imageUrl': 'https://images.unsplash.com/photo-1568605114967-8130f3a36994',
+      'category': 'House',
+    },
+    {
+      'title': 'Single Room in Shared House',
+      'rating': 4.0,
+      'location': 'Uptown',
+      'availability': 'Available Now',
+      'price': '\$500/month',
+      'imageUrl': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+      'category': 'Single',
+    },
+    {
+      'title': 'Shared Apartment',
+      'rating': 4.2,
+      'location': 'Midtown',
+      'availability': 'Available from August',
+      'price': '\$900/month',
+      'imageUrl': 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd',
+      'category': 'Sharing',
+    },
+  ];
   
   @override
   Widget build(BuildContext context) {
@@ -107,12 +159,17 @@ class _AccommodationSearchScreenState extends State<AccommodationSearchScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    CategoryButton(label: "Single"),
-                    CategoryButton(label: "Sharing"),
-                    CategoryButton(label: "House"),
-                    CategoryButton(label: "Apartment"),
-                  ],
+                  children: _categories.map((category) {
+                    return CategoryButton(
+                      label: category,
+                      selected: _selectedCategory == category,
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = category;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
               
@@ -121,34 +178,17 @@ class _AccommodationSearchScreenState extends State<AccommodationSearchScreen> {
               // Accommodation listings
               Expanded(
                 child: ListView(
-                  children: const [
-                    AccommodationCard(
-                      title: "Modern Studio Apartment",
-                      rating: 4.5,
-                      location: "Downtown",
-                      availability: "Available Immediately",
-                      price: "\$1200/month",
-                      imageUrl: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
-                    ),
-                    SizedBox(height: 15),
-                    AccommodationCard(
-                      title: "Luxury Apartment with View",
-                      rating: 4.8,
-                      location: "City Center",
-                      availability: "Available from June 1",
-                      price: "\$1800/month",
-                      imageUrl: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
-                    ),
-                    SizedBox(height: 15),
-                    AccommodationCard(
-                      title: "Cozy 2-Bedroom House",
-                      rating: 4.3,
-                      location: "Suburban Area",
-                      availability: "Available from July 15",
-                      price: "\$1500/month",
-                      imageUrl: "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
-                    ),
-                  ],
+                  children: _properties
+                      .where((property) => property['category'] == _selectedCategory)
+                      .map((property) => AccommodationCard(
+                            title: property['title'],
+                            rating: property['rating'],
+                            location: property['location'],
+                            availability: property['availability'],
+                            price: property['price'],
+                            imageUrl: property['imageUrl'],
+                          ))
+                      .toList(),
                 ),
               ),
             ],

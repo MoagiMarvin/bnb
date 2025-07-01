@@ -6,11 +6,11 @@ class PropertyListItem extends StatelessWidget {
   final VoidCallback onEdit; // Add this line
 
   const PropertyListItem({
-    Key? key,
+    super.key,
     required this.property,
     required this.onDelete,
     required this.onEdit, // Add this line
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

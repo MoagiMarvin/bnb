@@ -249,6 +249,45 @@ class _DiningEstablishmentFormState extends BaseVenueFormState<DiningEstablishme
         
         const SizedBox(height: 15),
         
+        // Contact Number field
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Contact Number',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF2D3142),
+              ),
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              controller: _contactNumberController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                hintText: 'Enter restaurant contact number',
+                filled: true,
+                fillColor: Colors.grey[100],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.all(15),
+                prefixIcon: const Icon(Icons.phone, color: Color(0xFF4F6CAD)),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a contact number';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+        
+        const SizedBox(height: 15),
+        
         // Seating capacity
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -16,6 +16,72 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
   // Options for dropdown
   final List<String> _options = ['Long Stay', 'Short Stay', 'Restaurants'];
   String _selectedOption = 'Restaurants'; // Default for this screen
+  final List<String> _categories = ["Italian", "Indian", "Chinese", "Fast Food", "Cafe"];
+  String _selectedCategory = "Italian";
+  
+  // Mock restaurant data
+  final List<Map<String, dynamic>> _restaurants = [
+    {
+      'name': 'Bella Italia',
+      'cuisine': 'Italian',
+      'rating': 4.7,
+      'priceRange': '',
+      'imageUrl': 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5',
+      'description': 'Authentic Italian cuisine with a modern twist. Our pasta is made fresh daily.',
+      'address': '123 Main St, Anytown',
+      'operatingHours': '11:00 AM - 10:00 PM',
+      'phone': '+1 234 567 8901',
+      'category': 'Italian',
+    },
+    {
+      'name': 'Spice Garden',
+      'cuisine': 'Indian',
+      'rating': 4.5,
+      'priceRange': '',
+      'imageUrl': 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4',
+      'description': 'Experience the rich flavors of authentic Indian cuisine in a cozy atmosphere.',
+      'address': '456 Oak Ave, Anytown',
+      'operatingHours': '12:00 PM - 10:00 PM',
+      'phone': '+1 234 567 8902',
+      'category': 'Indian',
+    },
+    {
+      'name': 'Golden Dragon',
+      'cuisine': 'Chinese',
+      'rating': 4.3,
+      'priceRange': '',
+      'imageUrl': 'https://images.unsplash.com/photo-1552566626-52f8b828add9',
+      'description': 'Traditional Chinese dishes prepared by master chefs using authentic recipes.',
+      'address': '789 Elm St, Anytown',
+      'operatingHours': '11:30 AM - 9:30 PM',
+      'phone': '+1 234 567 8903',
+      'category': 'Chinese',
+    },
+    {
+      'name': 'Burger Express',
+      'cuisine': 'Fast Food',
+      'rating': 4.1,
+      'priceRange': '',
+      'imageUrl': 'https://images.unsplash.com/photo-1550547660-d9450f859349',
+      'description': 'Quick and tasty fast food for people on the go.',
+      'address': '321 Fast Ln, Anytown',
+      'operatingHours': '10:00 AM - 11:00 PM',
+      'phone': '+1 234 567 8904',
+      'category': 'Fast Food',
+    },
+    {
+      'name': 'Cafe Delight',
+      'cuisine': 'Cafe',
+      'rating': 4.4,
+      'priceRange': '',
+      'imageUrl': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
+      'description': 'Cozy cafe with a variety of coffee and pastries.',
+      'address': '654 Coffee St, Anytown',
+      'operatingHours': '7:00 AM - 7:00 PM',
+      'phone': '+1 234 567 8905',
+      'category': 'Cafe',
+    },
+  ];
   
   @override
   Widget build(BuildContext context) {
@@ -107,13 +173,17 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    CategoryButton(label: "Italian"),
-                    CategoryButton(label: "Indian"),
-                    CategoryButton(label: "Chinese"),
-                    CategoryButton(label: "Fast Food"),
-                    CategoryButton(label: "Cafe"),
-                  ],
+                  children: _categories.map((category) {
+                    return CategoryButton(
+                      label: category,
+                      selected: _selectedCategory == category,
+                      onTap: () {
+                        setState(() {
+                          _selectedCategory = category;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
               ),
               
@@ -122,46 +192,21 @@ class _RestaurantListScreenState extends State<RestaurantListScreen> {
               // Restaurant listings
               Expanded(
                 child: ListView(
-                  children: [
-                    _buildRestaurantCard(
-                      context: context,
-                      name: "Bella Italia",
-                      cuisine: "Italian",
-                      rating: 4.7,
-                      priceRange: "\$\$",
-                      imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
-                      description: "Authentic Italian cuisine with a modern twist. Our pasta is made fresh daily.",
-                      address: "123 Main St, Anytown",
-                      operatingHours: "11:00 AM - 10:00 PM",
-                      phone: "+1 234 567 8901",
-                    ),
-                    const SizedBox(height: 15),
-                    _buildRestaurantCard(
-                      context: context,
-                      name: "Spice Garden",
-                      cuisine: "Indian",
-                      rating: 4.5,
-                      priceRange: "\$\$",
-                      imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4",
-                      description: "Experience the rich flavors of authentic Indian cuisine in a cozy atmosphere.",
-                      address: "456 Oak Ave, Anytown",
-                      operatingHours: "12:00 PM - 10:00 PM",
-                      phone: "+1 234 567 8902",
-                    ),
-                    const SizedBox(height: 15),
-                    _buildRestaurantCard(
-                      context: context,
-                      name: "Golden Dragon",
-                      cuisine: "Chinese",
-                      rating: 4.3,
-                      priceRange: "\$\$\$",
-                      imageUrl: "https://images.unsplash.com/photo-1552566626-52f8b828add9",
-                      description: "Traditional Chinese dishes prepared by master chefs using authentic recipes.",
-                      address: "789 Elm St, Anytown",
-                      operatingHours: "11:30 AM - 9:30 PM",
-                      phone: "+1 234 567 8903",
-                    ),
-                  ],
+                  children: _restaurants
+                      .where((restaurant) => restaurant['category'] == _selectedCategory)
+                      .map((restaurant) => _buildRestaurantCard(
+                            context: context,
+                            name: restaurant['name'],
+                            cuisine: restaurant['cuisine'],
+                            rating: restaurant['rating'],
+                            priceRange: restaurant['priceRange'],
+                            imageUrl: restaurant['imageUrl'],
+                            description: restaurant['description'],
+                            address: restaurant['address'],
+                            operatingHours: restaurant['operatingHours'],
+                            phone: restaurant['phone'],
+                          ))
+                      .toList(),
                 ),
               ),
             ],

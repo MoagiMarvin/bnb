@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
 
-class CategoryButton extends StatefulWidget {
+class CategoryButton extends StatelessWidget {
   final String label;
+  final bool selected;
+  final VoidCallback? onTap;
 
   const CategoryButton({
     super.key,
     required this.label,
+    this.selected = false,
+    this.onTap,
   });
-
-  @override
-  State<CategoryButton> createState() => _CategoryButtonState();
-}
-
-class _CategoryButtonState extends State<CategoryButton> {
-  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: GestureDetector(
-        onTap: () {
-          setState(() {
-            isSelected = !isSelected;
-          });
-        },
+        onTap: onTap,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF4F6CAD) : Colors.white,
+            color: selected ? const Color(0xFF4F6CAD) : Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -39,10 +32,10 @@ class _CategoryButtonState extends State<CategoryButton> {
             ],
           ),
           child: Text(
-            widget.label,
+            label,
             style: TextStyle(
-              color: isSelected ? Colors.white : Colors.grey[700],
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              color: selected ? Colors.white : Colors.grey[700],
+              fontWeight: FontWeight.normal,
             ),
           ),
         ),

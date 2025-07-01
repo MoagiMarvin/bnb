@@ -3,10 +3,10 @@ import 'base_venue_form.dart';
 
 class AccommodationForm extends BaseVenueForm {
   const AccommodationForm({
-    Key? key,
-    required Function(Map<String, dynamic>) onSubmit,
-    Map<String, dynamic>? initialData,
-  }) : super(key: key, onSubmit: onSubmit, initialData: initialData);
+    super.key,
+    required super.onSubmit,
+    super.initialData,
+  });
 
   @override
   State<AccommodationForm> createState() => _AccommodationFormState();
