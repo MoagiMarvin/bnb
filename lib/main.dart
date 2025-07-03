@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'screens/accommodation_search_screen.dart';
 import 'screens/admin_dashboard.dart';
 import 'screens/reservation_form_screen.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
+void main() async {
   // Initialize Google Maps
   WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://awzpatpmkkyltgqyuofj.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3enBhdHBta2t5bHRncXl1b2ZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMjg0NDksImV4cCI6MjA2NjYwNDQ0OX0.sort_Uqh53BBojYqfaPTdJvFoS_fqkUjO0CDeEcJgYU',
+  );
   runApp(const AccommodationApp());
 }
 
